@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_consumer!
+  before_action :set_event, only: [:create]
   
   def index
     @orders = current_consumer.orders.order(created_at: :desc)
@@ -13,7 +14,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @event = Event.find(params[:event_id])
     @order = current_consumer.orders.build(order_params)
     @order.event = @event
     @order.total_price = @event.price * @order.quantity
@@ -27,6 +27,10 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def set_event
+    @event = Event.find(params[:event_id])
+  end
 
   def order_params
     params.require(:order).permit(:quantity)

@@ -61,9 +61,7 @@
           <div class="sm:col-span-2">
             <dt class="text-sm font-medium text-gray-500">Purchase Tickets</dt>
             <dd class="mt-1">
-              <%= form_for @order, html: { class: "space-y-4" } do |f| %>
-                <%= f.hidden_field :event_id, value: @the_event.id %>
-                
+              <%= form_for [@the_event, @order], html: { class: "space-y-4" } do |f| %>
                 <div>
                   <%= f.label :quantity, "Number of Tickets", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">

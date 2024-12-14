@@ -12,9 +12,11 @@ Rails.application.routes.draw do
     member do
       post 'rsvp'
     end
+    resources :orders, only: [:create]
   end
+  
   resources :venues
-  resources :orders, only: [:create, :show, :index]
+  resources :orders, only: [:show, :index]
   
   # Nested resources
   resources :consumers do
