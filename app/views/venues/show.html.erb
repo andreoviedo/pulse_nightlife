@@ -1,90 +1,80 @@
-<div class="container">
-  <div class="mb-8">
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-3xl font-bold"><%= @venue.name %></h1>
-      <%= link_to "Back to Venues", venues_path, class: "text-blue-600 hover:text-blue-800" %>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Venue Information</h3>
     </div>
-
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-      <% if @venue.display_picture.present? %>
-        <%= image_tag @venue.display_picture, class: "w-full h-64 object-cover" %>
-      <% end %>
-      
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h2 class="text-xl font-semibold mb-4">Venue Details</h2>
-            <dl>
-              <dt class="font-medium text-gray-600">Address</dt>
-              <dd class="mb-2"><%= @venue.address %></dd>
-              
-              <dt class="font-medium text-gray-600">Capacity</dt>
-              <dd class="mb-2"><%= @venue.capacity %> people</dd>
-              
-              <dt class="font-medium text-gray-600">Description</dt>
-              <dd class="mb-2"><%= @venue.description %></dd>
-
-              <% if @venue.phone_number.present? %>
-                <dt class="font-medium text-gray-600">Phone</dt>
-                <dd class="mb-2"><%= @venue.phone_number %></dd>
-              <% end %>
-
-              <% if @venue.website.present? %>
-                <dt class="font-medium text-gray-600">Website</dt>
-                <dd class="mb-2">
-                  <%= link_to @venue.website, @venue.website, target: "_blank", class: "text-blue-600 hover:text-blue-800" %>
-                </dd>
-              <% end %>
-            </dl>
-          </div>
-
-          <% if @venue.amenities.present? %>
-            <div>
-              <h2 class="text-xl font-semibold mb-4">Amenities</h2>
-              <div class="space-y-2">
-                <% @venue.amenities.split("\n").each do |amenity| %>
-                  <div class="flex items-center">
-                    <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <%= amenity %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @venue.name %></dd>
         </div>
-      </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @venue.email %></dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Address</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @venue.address %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Capacity</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @venue.capacity %> people</dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Description</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @venue.description %></dd>
+        </div>
+      </dl>
     </div>
   </div>
 
-  <div class="mb-8">
-    <h2 class="text-2xl font-bold mb-4">Upcoming Events</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @upcoming_events.each do |event| %>
-        <div class="event-card bg-white rounded-lg shadow-md overflow-hidden">
-          <% if event.image.present? %>
-            <%= image_tag event.image, class: "w-full h-48 object-cover" %>
-          <% else %>
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-              <span class="text-gray-400">No image available</span>
-            </div>
-          <% end %>
-          
-          <div class="p-4">
-            <h3 class="text-xl font-semibold mb-2"><%= event.name %></h3>
-            <p class="text-gray-500 mb-2"><%= event.date.strftime("%B %d, %Y at %I:%M %p") %></p>
-            <p class="text-lg font-bold mb-4">$<%= number_with_precision(event.price, precision: 2) %></p>
-            <%= link_to "View Details", event_path(event), 
-                class: "w-full inline-block text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-          </div>
-        </div>
-      <% end %>
+  <!-- Venue Events -->
+  <div class="mt-8">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-medium text-gray-900">Events at <%= @venue.name %></h2>
+      <%= link_to "Add New Event", new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
     </div>
 
-    <% if @upcoming_events.empty? %>
-      <div class="text-center py-12 bg-white rounded-lg shadow-md">
-        <p class="text-gray-500 text-xl">No upcoming events at this venue.</p>
+    <% if @upcoming_events.any? %>
+      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 border-b border-gray-200">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Upcoming Events</h3>
+        </div>
+        <ul class="divide-y divide-gray-200">
+          <% @upcoming_events.each do |event| %>
+            <li class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+              <%= link_to event_path(event), class: "block" do %>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h4 class="text-lg font-medium text-gray-900"><%= event.name %></h4>
+                    <p class="text-sm text-gray-500">
+                      <%= event.date.strftime("%B %d, %Y at %I:%M %p") %>
+                    </p>
+                    <div class="mt-1">
+                      <% if event.promoters.any? %>
+                        <p class="text-sm text-gray-500">
+                          Promoters: <%= event.promoters.map(&:name).join(", ") %>
+                        </p>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="font-medium text-gray-900">$<%= event.price %></span>
+                    <p class="text-sm text-gray-500 mt-1">
+                      <%= event.capacity %> capacity
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <div class="text-center py-12 bg-white shadow overflow-hidden sm:rounded-lg">
+        <p class="text-gray-500 mb-4">No upcoming events.</p>
+        <%= link_to "Schedule Your First Event", new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
       </div>
     <% end %>
   </div>

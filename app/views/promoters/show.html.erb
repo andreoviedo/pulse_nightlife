@@ -1,0 +1,68 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Promoter Profile</h3>
+    </div>
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @promoter.name %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @promoter.email %></dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @promoter.phone_number %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Instagram Handle</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @promoter.instagram_handle %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Managed Events -->
+  <div class="mt-8">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-medium text-gray-900">Managed Events</h2>
+      <%= link_to "Add New Event", new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+    </div>
+    
+    <% if @events.any? %>
+      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <ul class="divide-y divide-gray-200">
+          <% @events.each do |event| %>
+            <li class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+              <%= link_to event_path(event), class: "block" do %>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900"><%= event.name %></h3>
+                    <p class="text-sm text-gray-500">
+                      <%= event.date.strftime("%B %d, %Y at %I:%M %p") %> • 
+                      <%= event.venue.name %>
+                    </p>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium text-gray-900">$<%= event.price %></span>
+                    <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full <%= event.date >= Date.today ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+                      <%= event.date >= Date.today ? 'Upcoming' : 'Past' %>
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <div class="text-center py-12 bg-white shadow overflow-hidden sm:rounded-lg">
+        <p class="text-gray-500 mb-4">No events yet.</p>
+        <%= link_to "Create Your First Event", new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+      </div>
+    <% end %>
+  </div>
+</div> 

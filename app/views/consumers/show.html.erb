@@ -1,0 +1,86 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Profile Information</h3>
+    </div>
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @consumer.name %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @consumer.email %></dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @consumer.phone_number %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @consumer.date_of_birth&.strftime("%B %d, %Y") %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Upcoming Events -->
+  <div class="mt-8">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Upcoming Events</h2>
+    <% if @events.any? %>
+      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <ul class="divide-y divide-gray-200">
+          <% @events.each do |event| %>
+            <li class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+              <%= link_to event_path(event), class: "block" do %>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900"><%= event.name %></h3>
+                    <p class="text-sm text-gray-500"><%= event.date.strftime("%B %d, %Y at %I:%M %p") %></p>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium text-gray-900">$<%= event.price %></span>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No upcoming events.</p>
+    <% end %>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="mt-8">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Orders</h2>
+    <% if @orders.any? %>
+      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <ul class="divide-y divide-gray-200">
+          <% @orders.each do |order| %>
+            <li class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+              <%= link_to order_path(order), class: "block" do %>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900"><%= order.event.name %></h3>
+                    <p class="text-sm text-gray-500">
+                      <%= order.created_at.strftime("%B %d, %Y") %> • 
+                      <%= pluralize(order.quantity, 'ticket') %>
+                    </p>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium text-gray-900">$<%= order.total_price %></span>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No orders yet.</p>
+    <% end %>
+  </div>
+</div> 
