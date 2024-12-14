@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :require_auth, only: [:new, :create, :edit, :update, :destroy]
   before_action :check_authorization, only: [:edit, :update, :destroy]
 
   def index
@@ -73,7 +73,7 @@ class EventsController < ApplicationController
 
   private
 
-  def authenticate_user!
+  def require_auth
     unless promoter_signed_in? || venue_signed_in?
       redirect_to(events_path, alert: "You must be logged in as a promoter or venue to perform this action.")
     end
