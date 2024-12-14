@@ -34,6 +34,12 @@ class Venue < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Relationships
+  has_many :events, dependent: :destroy
 
-  has_many  :events, class_name: "Event", foreign_key: "venue_id", dependent: :destroy
+  # Validations
+  validates :name, presence: true, uniqueness: true
+  validates :address, presence: true
+  validates :description, presence: true
+  validates :capacity, presence: true, numericality: { greater_than: 0 }
 end

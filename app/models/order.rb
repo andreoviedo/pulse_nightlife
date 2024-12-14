@@ -10,10 +10,33 @@
 #  table_service_id :integer
 #
 class Order < ApplicationRecord
+  # Relationships
+  belongs_to :event
+  belongs_to :consumer
 
-  belongs_to :consumer, required: true, class_name: "Consumer", foreign_key: "consumer_id"
+  # Validations
+  validates :quantity, presence: true, numericality: { greater_than: 0 }
+  validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :status, presence: true, inclusion: { in: ["pending", "confirmed", "completed"] }
+  validate :total_price_matches_calculation
+  validate :tickets_available
 
-  belongs_to :event, required: true, class_name: "Event", foreign_key: "event_id"
+  private
 
-  belongs_to :table_service, required: true, class_name: "TablePerson", foreign_key: "table_service_id"
+  def total_price_matches_calculation
+    if total_price != (quantity * event.price)
+      errors.add(:total_price, "must equal quantity times event price")
+    end
+  end
+
+  def tickets_available
+    return unless event && quantity
+
+    total_tickets_sold = event.orders.sum(:quantity)
+    tickets_remaining = event.capacity - total_tickets_sold
+
+    if quantity > tickets_remaining
+      errors.add(:quantity, "exceeds available tickets")
+    end
+  end
 end

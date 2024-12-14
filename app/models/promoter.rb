@@ -33,4 +33,10 @@ class Promoter < ApplicationRecord
   
 
   has_many  :events_promoters, class_name: "EventsPromoter", foreign_key: "promoter_id", dependent: :destroy
+  has_many :events, through: :events_promoters
+
+  # Validations
+  validates :name, presence: true
+  validates :phone_number, presence: true
+  validates :instagram_handle, presence: true, uniqueness: true
 end

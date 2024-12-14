@@ -24,6 +24,22 @@ class Consumer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many  :events_consumers, class_name: "EventsConsumer", foreign_key: "consumers_id", dependent: :destroy
-  has_many  :orders, class_name: "Order", foreign_key: "consumer_id", dependent: :destroy
+  # Relationships
+  has_many :events_consumers, dependent: :destroy
+  has_many :events, through: :events_consumers
+  has_many :orders, dependent: :destroy
+
+  # Validations
+  validates :name, presence: true
+  validates :phone_number, presence: true
+  validates :date_of_birth, presence: true
+  validate :must_be_over_21
+
+  private
+
+  def must_be_over_21
+    if date_of_birth.present? && date_of_birth > 21.years.ago.to_date
+      errors.add(:date_of_birth, "must be at least 21 years old")
+    end
+  end
 end

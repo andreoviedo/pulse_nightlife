@@ -18,12 +18,27 @@
 #  venue_id        :integer
 #
 class Event < ApplicationRecord
+  # Relationships
+  belongs_to :venue
+  has_many :events_promoters, dependent: :destroy
+  has_many :promoters, through: :events_promoters
+  has_many :events_consumers, dependent: :destroy
+  has_many :consumers, through: :events_consumers
+  has_many :orders, dependent: :destroy
 
-  belongs_to :venue, required: true, class_name: "Venue", foreign_key: "venue_id"
+  # Validations
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :date, presence: true
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :capacity, presence: true, numericality: { greater_than: 0 }
+  validate :capacity_cannot_exceed_venue_capacity
 
-  has_many  :events_promoters, class_name: "EventsPromoter", foreign_key: "event_id", dependent: :destroy
+  private
 
-  has_many  :events_consumers, class_name: "EventsConsumer", foreign_key: "event_id", dependent: :destroy
-
-  has_many  :orders, class_name: "Order", foreign_key: "event_id", dependent: :destroy
+  def capacity_cannot_exceed_venue_capacity
+    if capacity && venue && capacity > venue.capacity
+      errors.add(:capacity, "cannot exceed venue capacity")
+    end
+  end
 end

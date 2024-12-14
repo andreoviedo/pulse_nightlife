@@ -9,10 +9,12 @@
 #  event_id     :integer
 #
 class EventsConsumer < ApplicationRecord
+  # Relationships
+  belongs_to :event
+  belongs_to :consumer
 
-
-  belongs_to :consumers, required: true, class_name: "Consumer", foreign_key: "consumers_id"
-
-
-  belongs_to :event, required: true, class_name: "Event", foreign_key: "event_id"
+  # Validations
+  validates :status, presence: true, inclusion: { in: ["interested", "going"] }
+  validates :consumer_id, uniqueness: { scope: :event_id, 
+            message: "can only RSVP once to an event" }
 end

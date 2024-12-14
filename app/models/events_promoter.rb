@@ -9,8 +9,13 @@
 #  promoter_id :integer
 #
 class EventsPromoter < ApplicationRecord
+  # Relationships
+  belongs_to :event
+  belongs_to :promoter
 
-  belongs_to :promoter, required: true, class_name: "Promoter", foreign_key: "promoter_id"
-
-  belongs_to :event, required: true, class_name: "Event", foreign_key: "event_id"
+  # Validations
+  validates :commission_rate, presence: true, 
+            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates :promoter_id, uniqueness: { scope: :event_id, 
+            message: "can only be associated once with an event" }
 end
