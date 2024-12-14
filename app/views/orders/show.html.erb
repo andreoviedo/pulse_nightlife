@@ -1,0 +1,101 @@
+<div>
+  <div>
+    <h1>
+      Order #<%= @the_order.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/orders">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_order/<%= @the_order.id %>">
+          Delete order
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Table service
+      </dt>
+      <dd>
+        <%= @the_order.table_service_id %>
+      </dd>
+
+      <dt>
+        Consumer
+      </dt>
+      <dd>
+        <%= @the_order.consumer_id %>
+      </dd>
+
+      <dt>
+        Event
+      </dt>
+      <dd>
+        <%= @the_order.event_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_order.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_order.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit order
+    </h2>
+
+    <form action="/modify_order/<%= @the_order.id %>"  method="post" >
+      <div>
+        <label for="table_service_id_box">
+          Table service
+        </label>
+
+        <input type="text" id="table_service_id_box" name="query_table_service_id" value="<%= @the_order.table_service_id %>">
+      </div>
+
+      <div>
+        <label for="consumer_id_box">
+          Consumer
+        </label>
+
+        <input type="text" id="consumer_id_box" name="query_consumer_id" value="<%= @the_order.consumer_id %>">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_order.event_id %>">
+      </div>
+
+      <button>
+        Update order
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

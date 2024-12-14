@@ -1,0 +1,2 @@
+class EventsConsumer < ApplicationRecord
+end

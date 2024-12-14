@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all events promoters
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new events promoter
+    </h2>
+
+    <form action="/insert_events_promoter" method="post">
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id">
+      </div>
+
+      <div>
+        <label for="promoter_id_box">
+          Promoter
+        </label>
+
+        <input type="text" id="promoter_id_box" name="query_promoter_id">
+      </div>
+
+      <button>
+        Create events promoter
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Event
+        </th>
+
+        <th>
+          Promoter
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_events_promoters.each do |an_events_promoter| %>
+      <tr>
+        <td>
+          <%= an_events_promoter.id %>
+        </td>
+
+        <td>
+          <%= an_events_promoter.event_id %>
+        </td>
+
+        <td>
+          <%= an_events_promoter.promoter_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_events_promoter.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_events_promoter.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/events_promoters/<%= an_events_promoter.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

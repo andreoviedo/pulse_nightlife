@@ -1,0 +1,2 @@
+class EventsPromoter < ApplicationRecord
+end

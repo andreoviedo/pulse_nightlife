@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Events consumer #<%= @the_events_consumer.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/events_consumers">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_events_consumer/<%= @the_events_consumer.id %>">
+          Delete events consumer
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Consumers
+      </dt>
+      <dd>
+        <%= @the_events_consumer.consumers_id %>
+      </dd>
+
+      <dt>
+        Event
+      </dt>
+      <dd>
+        <%= @the_events_consumer.event_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_events_consumer.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_events_consumer.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit events consumer
+    </h2>
+
+    <form action="/modify_events_consumer/<%= @the_events_consumer.id %>"  method="post" >
+      <div>
+        <label for="consumers_id_box">
+          Consumers
+        </label>
+
+        <input type="text" id="consumers_id_box" name="query_consumers_id" value="<%= @the_events_consumer.consumers_id %>">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_events_consumer.event_id %>">
+      </div>
+
+      <button>
+        Update events consumer
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Events promoter #<%= @the_events_promoter.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/events_promoters">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_events_promoter/<%= @the_events_promoter.id %>">
+          Delete events promoter
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Event
+      </dt>
+      <dd>
+        <%= @the_events_promoter.event_id %>
+      </dd>
+
+      <dt>
+        Promoter
+      </dt>
+      <dd>
+        <%= @the_events_promoter.promoter_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_events_promoter.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_events_promoter.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit events promoter
+    </h2>
+
+    <form action="/modify_events_promoter/<%= @the_events_promoter.id %>"  method="post" >
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_events_promoter.event_id %>">
+      </div>
+
+      <div>
+        <label for="promoter_id_box">
+          Promoter
+        </label>
+
+        <input type="text" id="promoter_id_box" name="query_promoter_id" value="<%= @the_events_promoter.promoter_id %>">
+      </div>
+
+      <button>
+        Update events promoter
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

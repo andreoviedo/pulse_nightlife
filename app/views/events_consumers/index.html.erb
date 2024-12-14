@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all events consumers
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new events consumer
+    </h2>
+
+    <form action="/insert_events_consumer" method="post">
+      <div>
+        <label for="consumers_id_box">
+          Consumers
+        </label>
+
+        <input type="text" id="consumers_id_box" name="query_consumers_id">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id">
+      </div>
+
+      <button>
+        Create events consumer
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Consumers
+        </th>
+
+        <th>
+          Event
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_events_consumers.each do |an_events_consumer| %>
+      <tr>
+        <td>
+          <%= an_events_consumer.id %>
+        </td>
+
+        <td>
+          <%= an_events_consumer.consumers_id %>
+        </td>
+
+        <td>
+          <%= an_events_consumer.event_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_events_consumer.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_events_consumer.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/events_consumers/<%= an_events_consumer.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

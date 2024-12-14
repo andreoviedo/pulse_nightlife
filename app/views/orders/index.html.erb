@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all orders
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new order
+    </h2>
+
+    <form action="/insert_order" method="post">
+      <div>
+        <label for="table_service_id_box">
+          Table service
+        </label>
+
+        <input type="text" id="table_service_id_box" name="query_table_service_id">
+      </div>
+
+      <div>
+        <label for="consumer_id_box">
+          Consumer
+        </label>
+
+        <input type="text" id="consumer_id_box" name="query_consumer_id">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id">
+      </div>
+
+      <button>
+        Create order
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Table service
+        </th>
+
+        <th>
+          Consumer
+        </th>
+
+        <th>
+          Event
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_orders.each do |an_order| %>
+      <tr>
+        <td>
+          <%= an_order.id %>
+        </td>
+
+        <td>
+          <%= an_order.table_service_id %>
+        </td>
+
+        <td>
+          <%= an_order.consumer_id %>
+        </td>
+
+        <td>
+          <%= an_order.event_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_order.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_order.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/orders/<%= an_order.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
