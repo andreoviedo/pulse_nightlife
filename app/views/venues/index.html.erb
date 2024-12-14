@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="mb-4">
+    <h1>Venues</h1>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @venues.each do |venue| %>
+      <div class="venue-card bg-white rounded-lg shadow-md overflow-hidden">
+        <% if venue.display_picture.present? %>
+          <%= image_tag venue.display_picture, class: "w-full h-48 object-cover" %>
+        <% else %>
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-400">No image available</span>
+          </div>
+        <% end %>
+        
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-2"><%= venue.name %></h2>
+          <p class="text-gray-600 mb-2"><%= venue.address %></p>
+          <p class="text-gray-500 mb-4">Capacity: <%= venue.capacity %> people</p>
+          
+          <div class="flex justify-between items-center">
+            <%= link_to "View Details", venue_path(venue), 
+                class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+            
+            <%= link_to "View Events", venue_events_path(venue), 
+                class: "inline-block text-blue-600 hover:text-blue-800" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @venues.empty? %>
+    <div class="text-center py-12">
+      <p class="text-gray-500 text-xl">No venues found.</p>
+    </div>
+  <% end %>
+</div> 

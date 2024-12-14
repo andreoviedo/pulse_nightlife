@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-3xl font-bold"><%= @venue.name %></h1>
+      <%= link_to "Back to Venues", venues_path, class: "text-blue-600 hover:text-blue-800" %>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <% if @venue.display_picture.present? %>
+        <%= image_tag @venue.display_picture, class: "w-full h-64 object-cover" %>
+      <% end %>
+      
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Venue Details</h2>
+            <dl>
+              <dt class="font-medium text-gray-600">Address</dt>
+              <dd class="mb-2"><%= @venue.address %></dd>
+              
+              <dt class="font-medium text-gray-600">Capacity</dt>
+              <dd class="mb-2"><%= @venue.capacity %> people</dd>
+              
+              <dt class="font-medium text-gray-600">Description</dt>
+              <dd class="mb-2"><%= @venue.description %></dd>
+
+              <% if @venue.phone_number.present? %>
+                <dt class="font-medium text-gray-600">Phone</dt>
+                <dd class="mb-2"><%= @venue.phone_number %></dd>
+              <% end %>
+
+              <% if @venue.website.present? %>
+                <dt class="font-medium text-gray-600">Website</dt>
+                <dd class="mb-2">
+                  <%= link_to @venue.website, @venue.website, target: "_blank", class: "text-blue-600 hover:text-blue-800" %>
+                </dd>
+              <% end %>
+            </dl>
+          </div>
+
+          <% if @venue.amenities.present? %>
+            <div>
+              <h2 class="text-xl font-semibold mb-4">Amenities</h2>
+              <div class="space-y-2">
+                <% @venue.amenities.split("\n").each do |amenity| %>
+                  <div class="flex items-center">
+                    <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <%= amenity %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Upcoming Events</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @upcoming_events.each do |event| %>
+        <div class="event-card bg-white rounded-lg shadow-md overflow-hidden">
+          <% if event.image.present? %>
+            <%= image_tag event.image, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-400">No image available</span>
+            </div>
+          <% end %>
+          
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2"><%= event.name %></h3>
+            <p class="text-gray-500 mb-2"><%= event.date.strftime("%B %d, %Y at %I:%M %p") %></p>
+            <p class="text-lg font-bold mb-4">$<%= number_with_precision(event.price, precision: 2) %></p>
+            <%= link_to "View Details", event_path(event), 
+                class: "w-full inline-block text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @upcoming_events.empty? %>
+      <div class="text-center py-12 bg-white rounded-lg shadow-md">
+        <p class="text-gray-500 text-xl">No upcoming events at this venue.</p>
+      </div>
+    <% end %>
+  </div>
+</div> 
