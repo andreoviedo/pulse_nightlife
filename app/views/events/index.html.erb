@@ -1,86 +1,74 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="sm:flex sm:items-center mb-8">
-    <div class="sm:flex-auto">
-      <h1 class="text-2xl font-bold text-gray-900">Upcoming Events</h1>
-      <p class="mt-2 text-sm text-gray-700">Discover the hottest events in your area.</p>
-    </div>
-    <% if promoter_signed_in? %>
-      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-        <%= link_to new_event_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+<div class="container">
+  <div class="mb-4">
+    <div class="flex justify-between items-center">
+      <h1>Events</h1>
+      <% if promoter_signed_in? %>
+        <%= link_to new_event_path, class: "inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>
           Add Event
         <% end %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @list_of_events.each do |event| %>
-      <%= link_to event_path(event), class: "group" do %>
-        <div class="bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 rounded-lg">
-          <div class="relative pb-48 overflow-hidden">
-            <% if event.image.present? %>
-              <%= image_tag event.image, class: "absolute inset-0 h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-300" %>
-            <% else %>
-              <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 group-hover:scale-105 transition-transform duration-300">
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <h3 class="text-2xl font-bold text-white"><%= event.name.first(2) %></h3>
-                </div>
-              </div>
-            <% end %>
-            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <h3 class="text-xl font-bold text-white"><%= event.name %></h3>
-              <p class="text-sm text-white/90"><%= event.venue.name %></p>
-            </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <% if event.image.present? %>
+          <%= image_tag event.image, class: "w-full h-48 object-cover" %>
+        <% else %>
+          <div class="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <h3 class="text-xl font-bold text-white"><%= event.name.first(2) %></h3>
           </div>
+        <% end %>
+        
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-2"><%= event.name %></h2>
+          <p class="text-gray-600 mb-1"><%= event.venue.name %></p>
           
-          <div class="p-4">
-            <div class="flex items-center text-sm text-gray-600 mb-3">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-              </svg>
-              <%= event.date.strftime("%B %d, %Y at %I:%M %p") %>
-            </div>
+          <div class="flex items-center text-gray-500 mb-2 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+            </svg>
+            <%= event.date.strftime("%B %d, %Y at %I:%M %p") %>
+          </div>
 
-            <div class="flex justify-between items-center">
-              <div class="text-lg font-bold text-blue-600">
-                $<%= number_with_precision(event.price, precision: 2) %>
-              </div>
-              <div class="text-sm text-gray-600">
-                <%= event.capacity - event.orders.sum(:quantity) %> / <%= event.capacity %> tickets left
-              </div>
-            </div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-blue-600 font-semibold">$<%= number_with_precision(event.price, precision: 2) %></span>
+            <span class="text-gray-500 text-sm"><%= event.capacity - event.orders.sum(:quantity) %> tickets left</span>
+          </div>
 
-            <% if event.age_restriction.present? %>
-              <div class="mt-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                  <%= event.age_restriction %>
-                </span>
-              </div>
+          <% if event.age_restriction.present? %>
+            <div class="mb-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <%= event.age_restriction %>
+              </span>
+            </div>
+          <% end %>
+          
+          <div class="flex justify-between items-center">
+            <%= link_to "View Details", event_path(event), 
+                class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+            
+            <% if consumer_signed_in? %>
+              <%= link_to "Purchase Tickets", event_path(event), 
+                  class: "inline-block text-blue-600 hover:text-blue-800" %>
             <% end %>
           </div>
         </div>
-      <% end %>
+      </div>
     <% end %>
   </div>
 
   <% if @list_of_events.empty? %>
     <div class="text-center py-12">
-      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-      </svg>
-      <h3 class="mt-2 text-sm font-medium text-gray-900">No events found</h3>
-      <p class="mt-1 text-sm text-gray-500">Get started by creating a new event.</p>
+      <p class="text-gray-500 text-xl">No events found.</p>
       <% if promoter_signed_in? %>
-        <div class="mt-6">
-          <%= link_to new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-            </svg>
-            Add Event
-          <% end %>
+        <div class="mt-4">
+          <%= link_to "Add Event", new_event_path, 
+              class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
         </div>
       <% end %>
     </div>
