@@ -1,0 +1,53 @@
+<div class="container mx-auto px-4 py-8">
+  <section class="hero-section mb-12">
+    <h1 class="text-4xl font-bold mb-4">Discover the Best Nightlife Events</h1>
+    <p class="text-xl text-gray-600 mb-8">Find and book the hottest parties, clubs, and events in your area</p>
+  </section>
+
+  <section class="upcoming-events mb-12">
+    <h2 class="text-2xl font-bold mb-6">Upcoming Events</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @upcoming_events.each do |event| %>
+        <div class="event-card bg-white rounded-lg shadow-md overflow-hidden">
+          <% if event.image.present? %>
+            <%= image_tag event.image, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-400">No image available</span>
+            </div>
+          <% end %>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2"><%= event.name %></h3>
+            <p class="text-gray-600 mb-2"><%= event.venue.name %></p>
+            <p class="text-gray-500 mb-2"><%= event.date.strftime("%B %d, %Y at %I:%M %p") %></p>
+            <p class="text-lg font-bold mb-4">$<%= event.price %></p>
+            <%= link_to "View Details", event_path(event), class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="featured-venues">
+    <h2 class="text-2xl font-bold mb-6">Featured Venues</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <% @featured_venues.each do |venue| %>
+        <div class="venue-card bg-white rounded-lg shadow-md overflow-hidden">
+          <% if venue.display_picture.present? %>
+            <%= image_tag venue.display_picture, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-400">No image available</span>
+            </div>
+          <% end %>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2"><%= venue.name %></h3>
+            <p class="text-gray-600 mb-2"><%= venue.address %></p>
+            <p class="text-gray-500 mb-4">Capacity: <%= venue.capacity %> people</p>
+            <%= link_to "View Venue", venue_path(venue), class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div> 
