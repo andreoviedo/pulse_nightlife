@@ -1,59 +1,70 @@
-<div>
-  <div>
-    <h1>
-      Order #<%= @the_order.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/orders">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_order/<%= @the_order.id %>">
-          Delete order
-        </a>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Order Details</h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">Order #<%= @order.id %></p>
+        </div>
+        <%= link_to "Back to Orders", orders_path, class: "text-blue-600 hover:text-blue-900" %>
       </div>
     </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Event</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <%= link_to @order.event.name, event_path(@order.event), class: "text-blue-600 hover:text-blue-900" %>
+          </dd>
+        </div>
 
-    <dl>
-      <dt>
-        Table service
-      </dt>
-      <dd>
-        <%= @the_order.table_service_id %>
-      </dd>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Event Date</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <%= @order.event.date.strftime("%B %d, %Y at %I:%M %p") %>
+          </dd>
+        </div>
 
-      <dt>
-        Consumer
-      </dt>
-      <dd>
-        <%= @the_order.consumer_id %>
-      </dd>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Venue</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <%= link_to @order.event.venue.name, venue_path(@order.event.venue), class: "text-blue-600 hover:text-blue-900" %>
+          </dd>
+        </div>
 
-      <dt>
-        Event
-      </dt>
-      <dd>
-        <%= @the_order.event_id %>
-      </dd>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Order Status</dt>
+          <dd class="mt-1 text-sm">
+            <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+              <%= case @order.status
+                  when 'pending'
+                    'bg-yellow-100 text-yellow-800'
+                  when 'confirmed'
+                    'bg-blue-100 text-blue-800'
+                  when 'completed'
+                    'bg-green-100 text-green-800'
+                  end %>">
+              <%= @order.status.capitalize %>
+            </span>
+          </dd>
+        </div>
 
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_order.created_at) %> ago
-      </dd>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Quantity</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= pluralize(@order.quantity, 'ticket') %></dd>
+        </div>
 
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_order.updated_at) %> ago
-      </dd>
-    </dl>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Total Price</dt>
+          <dd class="mt-1 text-sm text-gray-900">$<%= @order.total_price %></dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Order Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @order.created_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </div>
 

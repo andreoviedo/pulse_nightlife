@@ -1,118 +1,72 @@
-<div>
-  <div>
-    <h1>
-      List of all orders
-    </h1>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-xl font-semibold text-gray-900">My Orders</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of all your orders and their current status.</p>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col">
+    <% if @orders.any? %>
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Event</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Total Price</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span class="sr-only">View</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <% @orders.each do |order| %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      <%= order.event.name %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= order.event.date.strftime("%B %d, %Y at %I:%M %p") %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= pluralize(order.quantity, 'ticket') %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      $<%= order.total_price %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm">
+                      <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+                        <%= case order.status
+                            when 'pending'
+                              'bg-yellow-100 text-yellow-800'
+                            when 'confirmed'
+                              'bg-blue-100 text-blue-800'
+                            when 'completed'
+                              'bg-green-100 text-green-800'
+                            end %>">
+                        <%= order.status.capitalize %>
+                      </span>
+                    </td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <%= link_to "View details", order_path(order), class: "text-blue-600 hover:text-blue-900" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="text-center py-12 bg-white shadow overflow-hidden sm:rounded-lg">
+        <p class="text-gray-500 mb-4">You haven't placed any orders yet.</p>
+        <%= link_to "Browse Events", events_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<hr>
-
-<div>
-  <div>
-    <h2>
-      Add a new order
-    </h2>
-
-    <form action="/insert_order" method="post">
-      <div>
-        <label for="table_service_id_box">
-          Table service
-        </label>
-
-        <input type="text" id="table_service_id_box" name="query_table_service_id">
-      </div>
-
-      <div>
-        <label for="consumer_id_box">
-          Consumer
-        </label>
-
-        <input type="text" id="consumer_id_box" name="query_consumer_id">
-      </div>
-
-      <div>
-        <label for="event_id_box">
-          Event
-        </label>
-
-        <input type="text" id="event_id_box" name="query_event_id">
-      </div>
-
-      <button>
-        Create order
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Table service
-        </th>
-
-        <th>
-          Consumer
-        </th>
-
-        <th>
-          Event
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_orders.each do |an_order| %>
-      <tr>
-        <td>
-          <%= an_order.id %>
-        </td>
-
-        <td>
-          <%= an_order.table_service_id %>
-        </td>
-
-        <td>
-          <%= an_order.consumer_id %>
-        </td>
-
-        <td>
-          <%= an_order.event_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(an_order.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(an_order.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/orders/<%= an_order.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
-<hr>

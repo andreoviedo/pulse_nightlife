@@ -1,11 +1,15 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_consumer!
+  
   def index
-    @consumer = Consumer.find(params[:consumer_id])
-    @orders = @consumer.orders.order(created_at: :desc)
+    @orders = current_consumer.orders.order(created_at: :desc)
   end
 
   def show
     @order = Order.find(params[:id])
+    unless @order.consumer == current_consumer
+      redirect_to root_path, alert: "You are not authorized to view this order."
+    end
   end
 
   def create
@@ -13,6 +17,7 @@ class OrdersController < ApplicationController
     @order = current_consumer.orders.build(order_params)
     @order.event = @event
     @order.total_price = @event.price * @order.quantity
+    @order.status = "pending"
 
     if @order.save
       redirect_to @order, notice: 'Order was successfully created.'
