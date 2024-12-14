@@ -20,6 +20,38 @@ Order.destroy_all
 EventsPromoter.destroy_all
 EventsConsumer.destroy_all
 
+
+# Create specific test users first
+puts "Creating test users..."
+
+# Create test venue
+Venue.create!(
+  email: "venue1@example.com",
+  password: "password",
+  name: "The Grand Ballroom",
+  address: "123 Main St, City",
+  description: "A luxurious venue in the heart of the city",
+  capacity: 500
+)
+
+# Create test promoter
+Promoter.create!(
+  email: "promoter1@example.com",
+  password: "password",
+  name: "John Smith",
+  phone_number: "555-0123",
+  instagram_handle: "@johnpromoter"
+)
+
+# Create test consumer
+Consumer.create!(
+  email: "consumer1@example.com",
+  password: "password",
+  name: "Mike Wilson",
+  phone_number: "555-4567",
+  date_of_birth: "1990-01-01"
+)
+
 # Create Venues
 puts "Creating venues..."
 venues = []
