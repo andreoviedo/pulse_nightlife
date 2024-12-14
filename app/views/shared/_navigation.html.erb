@@ -1,0 +1,60 @@
+<nav class="bg-white shadow-sm">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <%= link_to "Pulse Nightlife", root_path, class: "text-xl font-bold text-gray-800" %>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <%= link_to "Events", events_path, class: "text-gray-600 hover:text-gray-900" %>
+        <%= link_to "Venues", venues_path, class: "text-gray-600 hover:text-gray-900" %>
+        
+        <div class="relative" data-controller="dropdown">
+          <button class="text-gray-600 hover:text-gray-900" data-action="click->dropdown#toggle">
+            Sign In ▼
+          </button>
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden" data-dropdown-target="menu">
+            <%= link_to "Consumer Sign In", new_consumer_session_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+            <%= link_to "Promoter Sign In", new_promoter_session_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+            <%= link_to "Venue Sign In", new_venue_session_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+          </div>
+        </div>
+
+        <% if consumer_signed_in? %>
+          <div class="relative" data-controller="dropdown">
+            <button class="text-gray-600 hover:text-gray-900" data-action="click->dropdown#toggle">
+              <%= current_consumer.name %> ▼
+            </button>
+            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden" data-dropdown-target="menu">
+              <%= link_to "My Profile", consumer_path(current_consumer), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "My Orders", consumer_orders_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_consumer_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+            </div>
+          </div>
+        <% elsif promoter_signed_in? %>
+          <div class="relative" data-controller="dropdown">
+            <button class="text-gray-600 hover:text-gray-900" data-action="click->dropdown#toggle">
+              <%= current_promoter.name %> ▼
+            </button>
+            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden" data-dropdown-target="menu">
+              <%= link_to "My Events", promoter_events_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_promoter_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+            </div>
+          </div>
+        <% elsif venue_signed_in? %>
+          <div class="relative" data-controller="dropdown">
+            <button class="text-gray-600 hover:text-gray-900" data-action="click->dropdown#toggle">
+              <%= current_venue.name %> ▼
+            </button>
+            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden" data-dropdown-target="menu">
+              <%= link_to "Venue Dashboard", venue_events_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_venue_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to "Sign Up", new_consumer_registration_path, class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav> 

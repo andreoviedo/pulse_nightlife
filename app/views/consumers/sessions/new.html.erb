@@ -1,0 +1,37 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Consumer Log in</h2>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="mb-4">
+        <%= f.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.email_field :email, autocomplete: "email", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="mb-4">
+          <label class="flex items-center">
+            <%= f.check_box :remember_me, class: "mr-2" %>
+            <%= f.label :remember_me, class: "text-gray-700 text-sm font-bold" %>
+          </label>
+        </div>
+      <% end %>
+
+      <div class="flex items-center justify-between mb-4">
+        <%= f.submit "Log in", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        <%= link_to "Sign up instead", new_registration_path(resource_name), class: "inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" %>
+      </div>
+
+      <div class="text-center">
+        <%- if devise_mapping.recoverable? %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-sm text-blue-500 hover:text-blue-800" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div> 
