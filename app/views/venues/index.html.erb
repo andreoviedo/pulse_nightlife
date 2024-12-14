@@ -1,6 +1,16 @@
 <div class="container">
   <div class="mb-4">
-    <h1>Venues</h1>
+    <div class="flex justify-between items-center">
+      <h1>Venues</h1>
+      <% if venue_signed_in? %>
+        <%= link_to new_venue_path, class: "inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          Add Venue
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -10,7 +20,9 @@
           <%= image_tag venue.display_picture, class: "w-full h-48 object-cover" %>
         <% else %>
           <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-            <span class="text-gray-400">No image available</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
           </div>
         <% end %>
         
@@ -34,6 +46,12 @@
   <% if @venues.empty? %>
     <div class="text-center py-12">
       <p class="text-gray-500 text-xl">No venues found.</p>
+      <% if venue_signed_in? %>
+        <div class="mt-4">
+          <%= link_to "Add Venue", new_venue_path, 
+              class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div> 
