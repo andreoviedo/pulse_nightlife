@@ -17,7 +17,16 @@
 #  ticket_price    :decimal(, )
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  promoter_id     :bigint           not null
 #  venue_id        :integer
+#
+# Indexes
+#
+#  index_events_on_promoter_id  (promoter_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (promoter_id => promoters.id)
 #
 class Event < ApplicationRecord
   # Relationships
