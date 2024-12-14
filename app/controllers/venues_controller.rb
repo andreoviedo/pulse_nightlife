@@ -1,7 +1,4 @@
 class VenuesController < ApplicationController
-  before_action :authenticate_venue!, only: [:edit, :update]
-  before_action :check_authorization, only: [:edit, :update]
-
   def index
     @venues = Venue.all.order(name: :asc)
     render({ :template => "venues/index" })
@@ -32,18 +29,5 @@ class VenuesController < ApplicationController
 
   def venue_params
     params.require(:venue).permit(:name, :address, :description, :capacity)
-  end
-
-  def authenticate_venue!
-    unless venue_signed_in?
-      redirect_to venues_path, alert: "You must be logged in as a venue to perform this action."
-    end
-  end
-
-  def check_authorization
-    @venue = Venue.find(params[:id])
-    unless current_venue == @venue
-      redirect_to venues_path, alert: "You are not authorized to modify this venue."
-    end
   end
 end 
