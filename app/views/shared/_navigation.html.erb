@@ -25,8 +25,8 @@
             </button>
             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
               <%= link_to "My Profile", consumer_path(current_consumer), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
-              <%= link_to "My Orders", consumer_orders_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
-              <%= link_to "Sign Out", destroy_consumer_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "My Orders", consumer_orders_path(current_consumer), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_consumer_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
             </div>
           </div>
         <% elsif promoter_signed_in? %>
@@ -35,8 +35,8 @@
               <%= current_promoter.name %> ▼
             </button>
             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-              <%= link_to "My Events", promoter_events_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
-              <%= link_to "Sign Out", destroy_promoter_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "My Events", promoter_events_path(current_promoter), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_promoter_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
             </div>
           </div>
         <% elsif venue_signed_in? %>
@@ -45,8 +45,8 @@
               <%= current_venue.name %> ▼
             </button>
             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-              <%= link_to "Venue Dashboard", venue_events_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
-              <%= link_to "Sign Out", destroy_venue_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Venue Dashboard", venue_events_path(current_venue), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+              <%= link_to "Sign Out", destroy_venue_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
             </div>
           </div>
         <% else %>

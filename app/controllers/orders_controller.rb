@@ -1,7 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_consumer!
-  before_action :check_authorization, only: [:show]
-
   def index
     @consumer = Consumer.find(params[:consumer_id])
     @orders = @consumer.orders.order(created_at: :desc)
@@ -28,12 +25,5 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:quantity)
-  end
-
-  def check_authorization
-    @order = Order.find(params[:id])
-    unless current_consumer == @order.consumer
-      redirect_to root_path, alert: "You are not authorized to view this order."
-    end
   end
 end
