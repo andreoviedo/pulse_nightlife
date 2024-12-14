@@ -5,11 +5,19 @@
         <%= link_to "Pulse Nightlife", root_path, class: "text-xl font-bold text-gray-800" %>
       </div>
 
-      <div class="flex items-center space-x-4">
-        <%= link_to "Events", events_path, class: "text-gray-600 hover:text-gray-900" %>
-        <%= link_to "Venues", venues_path, class: "text-gray-600 hover:text-gray-900" %>
+      <div class="flex items-center space-x-6">
+        <%= link_to "Events", events_path, class: "text-gray-600 hover:text-gray-900 font-medium" %>
+        <%= link_to "Venues", venues_path, class: "text-gray-600 hover:text-gray-900 font-medium" %>
         
-        <div class="relative" data-controller="dropdown">
+        <% if promoter_signed_in? || venue_signed_in? %>
+          <%= link_to "Add Event", new_event_path, class: "text-gray-600 hover:text-gray-900 font-medium" %>
+        <% end %>
+        
+        <% if venue_signed_in? %>
+          <%= link_to "Manage Venue", edit_venue_path(current_venue), class: "text-gray-600 hover:text-gray-900 font-medium" %>
+        <% end %>
+        
+        <div class="relative ml-4" data-controller="dropdown">
           <button class="text-gray-600 hover:text-gray-900" data-action="click->dropdown#toggle">
             Sign In ▼
           </button>
