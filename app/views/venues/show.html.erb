@@ -52,18 +52,13 @@
                       <%= event.date.strftime("%B %d, %Y at %I:%M %p") %>
                     </p>
                     <div class="mt-1">
-                      <% if event.promoters.any? %>
-                        <p class="text-sm text-gray-500">
-                          Promoters: <%= event.promoters.map(&:name).join(", ") %>
+                      <div class="text-right">
+                        <span class="font-medium text-gray-900">$<%= event.price %></span>
+                        <p class="text-sm text-gray-500 mt-1">
+                          <%= event.capacity %> capacity
                         </p>
-                      <% end %>
+                      </div>
                     </div>
-                  </div>
-                  <div class="text-right">
-                    <span class="font-medium text-gray-900">$<%= event.price %></span>
-                    <p class="text-sm text-gray-500 mt-1">
-                      <%= event.capacity %> capacity
-                    </p>
                   </div>
                 </div>
               <% end %>
