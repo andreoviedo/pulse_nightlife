@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  age_restriction :string
 #  capacity        :integer
+#  date            :datetime
 #  description     :text
 #  end_time        :datetime
 #  image           :string

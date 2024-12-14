@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_14_181246) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_14_183034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_181246) do
     t.string "profile_picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone_number"
+    t.date "date_of_birth"
     t.index ["email"], name: "index_consumers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_consumers_on_reset_password_token", unique: true
   end
@@ -42,6 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_181246) do
     t.string "image"
     t.string "status"
     t.integer "capacity"
+    t.datetime "date"
   end
 
   create_table "events_consumers", force: :cascade do |t|
@@ -83,6 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_181246) do
     t.text "description"
     t.text "social_media_links"
     t.string "logo"
+    t.string "instagram_handle"
     t.index ["email"], name: "index_promoters_on_email", unique: true
     t.index ["reset_password_token"], name: "index_promoters_on_reset_password_token", unique: true
   end

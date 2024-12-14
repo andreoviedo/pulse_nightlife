@@ -7,6 +7,7 @@
 #  description            :text
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  instagram_handle       :string
 #  logo                   :string
 #  name                   :string
 #  phone_number           :integer

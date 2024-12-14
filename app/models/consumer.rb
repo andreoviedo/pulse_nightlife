@@ -3,9 +3,11 @@
 # Table name: consumers
 #
 #  id                     :bigint           not null, primary key
+#  date_of_birth          :date
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  name                   :string
+#  phone_number           :string
 #  profile_picture        :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
