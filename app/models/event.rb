@@ -22,8 +22,7 @@
 class Event < ApplicationRecord
   # Relationships
   belongs_to :venue
-  has_many :events_promoters, dependent: :destroy
-  has_many :promoters, through: :events_promoters
+  belongs_to :promoter
   has_many :events_consumers, dependent: :destroy
   has_many :consumers, through: :events_consumers
   has_many :orders, dependent: :destroy
@@ -34,6 +33,7 @@ class Event < ApplicationRecord
   validates :date, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :capacity, presence: true, numericality: { greater_than: 0 }
+  validates :promoter, presence: true
   validate :capacity_cannot_exceed_venue_capacity
 
   private

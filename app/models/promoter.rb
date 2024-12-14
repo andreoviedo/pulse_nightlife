@@ -32,9 +32,7 @@ class Promoter < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-
-  has_many  :events_promoters, class_name: "EventsPromoter", foreign_key: "promoter_id", dependent: :destroy
-  has_many :events, through: :events_promoters
+  has_many :events, dependent: :destroy
 
   # Validations
   validates :name, presence: true

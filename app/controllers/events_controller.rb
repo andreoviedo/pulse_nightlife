@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update, :destroy, :rsvp]
   before_action :authenticate_consumer!, only: [:rsvp]
+  before_action :authenticate_promoter!, only: [:new, :create, :update, :destroy]
+  before_action :check_event_owner, only: [:update, :destroy]
 
   def index
     matching_events = Event.where("date >= ?", Date.today)
@@ -13,17 +15,16 @@ class EventsController < ApplicationController
   end
 
   def new
-    @the_event = Event.new
+    @the_event = current_promoter.events.build
   end
 
   def create
-    the_event = Event.new(event_params)
+    @the_event = current_promoter.events.build(event_params)
 
-    if the_event.valid?
-      the_event.save
+    if @the_event.save
       redirect_to("/events", { :notice => "Event created successfully." })
     else
-      redirect_to("/events", { :alert => the_event.errors.full_messages.to_sentence })
+      redirect_to("/events", { :alert => @the_event.errors.full_messages.to_sentence })
     end
   end
 
@@ -64,6 +65,12 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :venue_id, :description, :date, :price, :capacity)
+    params.require(:event).permit(:name, :description, :date, :price, :capacity, :venue_id, :start_time, :end_time, :age_restriction, :status)
+  end
+
+  def check_event_owner
+    unless @the_event.promoter == current_promoter
+      redirect_to events_path, alert: "You are not authorized to modify this event."
+    end
   end
 end
