@@ -8,9 +8,13 @@ Rails.application.routes.draw do
   root "events#index"
 
   # Basic resources
-  resources :events
+  resources :events do
+    member do
+      post 'rsvp'
+    end
+  end
   resources :venues
-  resources :orders, only: [:create, :show]
+  resources :orders, only: [:create, :show, :index]
   
   # Nested resources
   resources :consumers do
