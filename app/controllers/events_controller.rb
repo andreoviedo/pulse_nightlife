@@ -16,6 +16,7 @@ class EventsController < ApplicationController
 
   def new
     @the_event = current_promoter.events.build
+    render layout: "application"
   end
 
   def create
@@ -24,7 +25,7 @@ class EventsController < ApplicationController
     if @the_event.save
       redirect_to("/events", { :notice => "Event created successfully." })
     else
-      redirect_to("/events", { :alert => @the_event.errors.full_messages.to_sentence })
+      render :new, layout: "application", status: :unprocessable_entity
     end
   end
 
