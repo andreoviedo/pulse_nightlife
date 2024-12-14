@@ -17,7 +17,6 @@ Event.destroy_all
 Promoter.destroy_all
 Consumer.destroy_all
 Order.destroy_all
-EventsPromoter.destroy_all
 EventsConsumer.destroy_all
 
 
@@ -98,10 +97,12 @@ end
 # Create Events
 puts "Creating events..."
 events = []
-venues.each do |venue|
+promoters.each do |promoter|
   rand(2..4).times do
+    venue = venues.sample
     event = Event.create!(
       venue: venue,
+      promoter: promoter,
       name: Faker::Music.album,
       description: Faker::Lorem.paragraph(sentence_count: 3),
       date: Faker::Time.between(from: DateTime.now, to: 2.months.from_now),
@@ -109,21 +110,9 @@ venues.each do |venue|
       capacity: rand(50..venue.capacity)
     )
     events << event
-
-    # Associate random promoters with each event
-    # Select random promoters without replacement
-    selected_promoters = promoters.sample(rand(1..3))
-    selected_promoters.each do |promoter|
-      EventsPromoter.create!(
-        event: event,
-        promoter: promoter,
-        commission_rate: rand(5..15)
-      )
-    end
   end
 end
 
-# Create Orders and EventsConsumer records
 # Create Orders and EventsConsumer records
 puts "Creating orders and consumer event associations..."
 events.each do |event|
