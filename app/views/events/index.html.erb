@@ -1,7 +1,12 @@
 <div class="container">
   <div class="mb-4">
     <div class="flex justify-between items-center">
-      <h1>Events</h1>
+      <div>
+        <h1><%= promoter_signed_in? ? 'My Events' : 'Events' %></h1>
+        <% if promoter_signed_in? %>
+          <p class="text-sm text-gray-600 mt-1">Manage your upcoming events</p>
+        <% end %>
+      </div>
       <% if promoter_signed_in? %>
         <%= link_to new_event_path, class: "inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
@@ -54,7 +59,10 @@
             <%= link_to "View Details", event_path(event), 
                 class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
             
-            <% if consumer_signed_in? %>
+            <% if promoter_signed_in? %>
+              <%= link_to "Edit Event", edit_event_path(event), 
+                  class: "inline-block text-blue-600 hover:text-blue-800" %>
+            <% elsif consumer_signed_in? %>
               <%= link_to "Purchase Tickets", event_path(event), 
                   class: "inline-block text-blue-600 hover:text-blue-800" %>
             <% end %>
@@ -66,12 +74,22 @@
 
   <% if @list_of_events.empty? %>
     <div class="text-center py-12">
-      <p class="text-gray-500 text-xl">No events found.</p>
       <% if promoter_signed_in? %>
-        <div class="mt-4">
-          <%= link_to "Add Event", new_event_path, 
-              class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No events yet</h3>
+        <p class="mt-1 text-sm text-gray-500">Get started by creating your first event.</p>
+        <div class="mt-6">
+          <%= link_to new_event_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Create your first event
+          <% end %>
         </div>
+      <% else %>
+        <p class="text-gray-500 text-xl">No events found.</p>
       <% end %>
     </div>
   <% end %>

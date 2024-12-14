@@ -5,8 +5,13 @@ class EventsController < ApplicationController
   before_action :check_event_owner, only: [:update, :destroy]
 
   def index
-    matching_events = Event.where("date >= ?", Date.today)
-    @list_of_events = matching_events.order({ :date => :asc })
+    base_query = Event.where("date >= ?", Date.today)
+    
+    if promoter_signed_in?
+      @list_of_events = base_query.where(promoter: current_promoter).order(date: :asc)
+    else
+      @list_of_events = base_query.order(date: :asc)
+    end
   end
 
   def show
