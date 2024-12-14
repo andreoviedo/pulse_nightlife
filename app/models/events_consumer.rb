@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: events_consumers
+#
+#  id           :bigint           not null, primary key
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  consumers_id :integer
+#  event_id     :integer
+#
 class EventsConsumer < ApplicationRecord
 
 
