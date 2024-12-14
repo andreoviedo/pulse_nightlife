@@ -37,7 +37,7 @@
                       <%= pluralize(order.quantity, 'ticket') %>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      $<%= order.total_price %>
+                      $<%= number_with_precision(order.total_price, precision: 2) %>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm">
                       <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 

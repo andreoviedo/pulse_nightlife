@@ -56,7 +56,7 @@
 
         <div class="sm:col-span-1">
           <dt class="text-sm font-medium text-gray-500">Total Price</dt>
-          <dd class="mt-1 text-sm text-gray-900">$<%= @order.total_price %></dd>
+          <dd class="mt-1 text-sm text-gray-900">$<%= number_with_precision(@order.total_price, precision: 2) %></dd>
         </div>
 
         <div class="sm:col-span-1">
@@ -67,46 +67,3 @@
     </div>
   </div>
 </div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit order
-    </h2>
-
-    <form action="/modify_order/<%= @the_order.id %>"  method="post" >
-      <div>
-        <label for="table_service_id_box">
-          Table service
-        </label>
-
-        <input type="text" id="table_service_id_box" name="query_table_service_id" value="<%= @the_order.table_service_id %>">
-      </div>
-
-      <div>
-        <label for="consumer_id_box">
-          Consumer
-        </label>
-
-        <input type="text" id="consumer_id_box" name="query_consumer_id" value="<%= @the_order.consumer_id %>">
-      </div>
-
-      <div>
-        <label for="event_id_box">
-          Event
-        </label>
-
-        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_order.event_id %>">
-      </div>
-
-      <button>
-        Update order
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
