@@ -3,6 +3,7 @@
 # Table name: events_consumers
 #
 #  id          :bigint           not null, primary key
+#  status      :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  consumer_id :integer

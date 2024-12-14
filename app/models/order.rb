@@ -3,6 +3,9 @@
 # Table name: orders
 #
 #  id               :bigint           not null, primary key
+#  quantity         :integer
+#  status           :string
+#  total_price      :decimal(, )
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  consumer_id      :integer

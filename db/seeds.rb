@@ -92,12 +92,13 @@ venues.each do |venue|
 end
 
 # Create Orders and EventsConsumer records
+# Create Orders and EventsConsumer records
 puts "Creating orders and consumer event associations..."
 events.each do |event|
-  # Add some consumers to each event
-  rand(5..15).times do
-    consumer = consumers.sample
-    
+  # Get a random selection of unique consumers for this event
+  event_consumers = consumers.sample(rand(5..15))
+  
+  event_consumers.each do |consumer|
     # Create EventsConsumer record (RSVP)
     EventsConsumer.create!(
       event: event,
