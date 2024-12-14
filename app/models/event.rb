@@ -10,6 +10,7 @@
 #  end_time        :datetime
 #  image           :string
 #  name            :string
+#  price           :decimal(, )
 #  start_time      :datetime
 #  status          :string
 #  ticket_link     :string

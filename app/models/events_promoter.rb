@@ -2,11 +2,12 @@
 #
 # Table name: events_promoters
 #
-#  id          :bigint           not null, primary key
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  event_id    :integer
-#  promoter_id :integer
+#  id              :bigint           not null, primary key
+#  commission_rate :decimal(, )
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  event_id        :integer
+#  promoter_id     :integer
 #
 class EventsPromoter < ApplicationRecord
   # Relationships

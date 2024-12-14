@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_14_183034) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_14_183828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,10 +45,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_183034) do
     t.string "status"
     t.integer "capacity"
     t.datetime "date"
+    t.decimal "price"
   end
 
   create_table "events_consumers", force: :cascade do |t|
-    t.integer "consumers_id"
+    t.integer "consumer_id"
     t.integer "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,6 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_183034) do
     t.integer "promoter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "commission_rate"
   end
 
   create_table "orders", force: :cascade do |t|
