@@ -1,64 +1,46 @@
-<div>
-  <div>
-    <h1>
-      List of all events
-    </h1>
+<div class="container">
+  <div class="mb-4">
+    <h1>List of all events</h1>
   </div>
 
   <hr>
 
-  <div>
+  <div class="mb-4">
     <div>
-      <h2>
-        Add a new event
-      </h2>
+      <h2>Add a new event</h2>
 
       <form action="/insert_event" method="post">
         <div>
-          <label for="name_box">
-            Name
-          </label>
+          <label for="name_box">Name</label>
           <input type="text" id="name_box" name="query_name">
         </div>
 
         <div>
-          <label for="venue_id_box">
-            Venue
-          </label>
+          <label for="venue_id_box">Venue</label>
           <input type="text" id="venue_id_box" name="query_venue_id">
         </div>
 
         <div>
-          <label for="description_box">
-            Description
-          </label>
+          <label for="description_box">Description</label>
           <textarea id="description_box" name="query_description"></textarea>
         </div>
 
         <div>
-          <label for="date_box">
-            Date
-          </label>
+          <label for="date_box">Date</label>
           <input type="datetime-local" id="date_box" name="query_date">
         </div>
 
         <div>
-          <label for="price_box">
-            Price
-          </label>
-          <input type="number" id="price_box" name="query_price">
+          <label for="price_box">Price</label>
+          <input type="number" id="price_box" name="query_price" step="0.01" min="0">
         </div>
 
         <div>
-          <label for="capacity_box">
-            Capacity
-          </label>
-          <input type="number" id="capacity_box" name="query_capacity">
+          <label for="capacity_box">Capacity</label>
+          <input type="number" id="capacity_box" name="query_capacity" min="1">
         </div>
 
-        <button>
-          Create event
-        </button>
+        <button>Create event</button>
       </form>
     </div>
   </div>
@@ -67,7 +49,7 @@
 
   <div>
     <div>
-      <table border="1">
+      <table>
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -75,9 +57,9 @@
           <th>Date</th>
           <th>Price</th>
           <th>Capacity</th>
-          <th>Created at</th>
-          <th>Updated at</th>
-          <th></th>
+          <th>Created</th>
+          <th>Updated</th>
+          <th>Actions</th>
         </tr>
 
         <% @list_of_events.each do |an_event| %>
@@ -86,16 +68,14 @@
           <td><%= an_event.name %></td>
           <td><%= an_event.venue.name %></td>
           <td><%= an_event.date.strftime("%B %d, %Y at %I:%M %p") %></td>
-          <td>$<%= an_event.price %></td>
+          <td>$<%= number_with_precision(an_event.price, precision: 2) %></td>
           <td>
             <%= an_event.capacity - an_event.orders.sum(:quantity) %> / <%= an_event.capacity %>
           </td>
           <td><%= time_ago_in_words(an_event.created_at) %> ago</td>
           <td><%= time_ago_in_words(an_event.updated_at) %> ago</td>
           <td>
-            <a href="/events/<%= an_event.id %>">
-              Show details
-            </a>
+            <a href="/events/<%= an_event.id %>">Show details</a>
           </td>
         </tr>
         <% end %>

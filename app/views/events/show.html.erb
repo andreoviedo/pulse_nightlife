@@ -1,23 +1,14 @@
-<div>
-  <div>
-    <h1>
-      Event #<%= @the_event.id %> details
-    </h1>
+<div class="container">
+  <div class="mb-4">
+    <h1>Event #<%= @the_event.id %> details</h1>
 
-    <div>
-      <div>
-        <a href="/events">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_event/<%= @the_event.id %>">
-          Delete event
-        </a>
-      </div>
+    <div class="nav-links">
+      <a href="/events">Back to events</a>
+      <a href="/delete_event/<%= @the_event.id %>" class="text-red">Delete event</a>
     </div>
+  </div>
 
+  <div class="mb-4">
     <dl>
       <dt>Name</dt>
       <dd><%= @the_event.name %></dd>
@@ -32,74 +23,56 @@
       <dd><%= @the_event.date.strftime("%B %d, %Y at %I:%M %p") %></dd>
 
       <dt>Price</dt>
-      <dd>$<%= @the_event.price %></dd>
+      <dd>$<%= number_with_precision(@the_event.price, precision: 2) %></dd>
 
       <dt>Capacity</dt>
       <dd><%= @the_event.capacity - @the_event.orders.sum(:quantity) %> tickets left out of <%= @the_event.capacity %></dd>
 
-      <dt>Created at</dt>
+      <dt>Created</dt>
       <dd><%= time_ago_in_words(@the_event.created_at) %> ago</dd>
 
-      <dt>Updated at</dt>
+      <dt>Updated</dt>
       <dd><%= time_ago_in_words(@the_event.updated_at) %> ago</dd>
     </dl>
   </div>
-</div>
 
-<hr>
+  <hr>
 
-<div>
-  <div>
-    <h2>
-      Edit event
-    </h2>
+  <div class="mb-4">
+    <h2>Edit event</h2>
 
     <form action="/modify_event/<%= @the_event.id %>" method="post">
       <div>
-        <label for="name_box">
-          Name
-        </label>
+        <label for="name_box">Name</label>
         <input type="text" id="name_box" name="query_name" value="<%= @the_event.name %>">
       </div>
 
       <div>
-        <label for="venue_id_box">
-          Venue
-        </label>
+        <label for="venue_id_box">Venue</label>
         <input type="text" id="venue_id_box" name="query_venue_id" value="<%= @the_event.venue_id %>">
       </div>
 
       <div>
-        <label for="description_box">
-          Description
-        </label>
+        <label for="description_box">Description</label>
         <textarea id="description_box" name="query_description"><%= @the_event.description %></textarea>
       </div>
 
       <div>
-        <label for="date_box">
-          Date
-        </label>
+        <label for="date_box">Date</label>
         <input type="datetime-local" id="date_box" name="query_date" value="<%= @the_event.date.strftime("%Y-%m-%dT%H:%M") %>">
       </div>
 
       <div>
-        <label for="price_box">
-          Price
-        </label>
-        <input type="number" id="price_box" name="query_price" value="<%= @the_event.price %>">
+        <label for="price_box">Price</label>
+        <input type="number" id="price_box" name="query_price" value="<%= @the_event.price %>" step="0.01" min="0">
       </div>
 
       <div>
-        <label for="capacity_box">
-          Capacity
-        </label>
-        <input type="number" id="capacity_box" name="query_capacity" value="<%= @the_event.capacity %>">
+        <label for="capacity_box">Capacity</label>
+        <input type="number" id="capacity_box" name="query_capacity" value="<%= @the_event.capacity %>" min="1">
       </div>
 
-      <button>
-        Update event
-      </button>
+      <button>Update event</button>
     </form>
   </div>
 </div>
