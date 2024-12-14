@@ -9,39 +9,39 @@
     <div>
       <h2>Add a new event</h2>
 
-      <form action="/insert_event" method="post">
+      <%= form_for Event.new do |f| %>
         <div>
-          <label for="name_box">Name</label>
-          <input type="text" id="name_box" name="query_name">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
         </div>
 
         <div>
-          <label for="venue_id_box">Venue</label>
-          <input type="text" id="venue_id_box" name="query_venue_id">
+          <%= f.label :venue_id %>
+          <%= f.text_field :venue_id %>
         </div>
 
         <div>
-          <label for="description_box">Description</label>
-          <textarea id="description_box" name="query_description"></textarea>
+          <%= f.label :description %>
+          <%= f.text_area :description %>
         </div>
 
         <div>
-          <label for="date_box">Date</label>
-          <input type="datetime-local" id="date_box" name="query_date">
+          <%= f.label :date %>
+          <%= f.datetime_local_field :date %>
         </div>
 
         <div>
-          <label for="price_box">Price</label>
-          <input type="number" id="price_box" name="query_price" step="0.01" min="0">
+          <%= f.label :price %>
+          <%= f.number_field :price, step: "0.01", min: 0 %>
         </div>
 
         <div>
-          <label for="capacity_box">Capacity</label>
-          <input type="number" id="capacity_box" name="query_capacity" min="1">
+          <%= f.label :capacity %>
+          <%= f.number_field :capacity, min: 1 %>
         </div>
 
-        <button>Create event</button>
-      </form>
+        <%= f.submit "Create event", class: "button" %>
+      <% end %>
     </div>
   </div>
 
@@ -75,7 +75,7 @@
           <td><%= time_ago_in_words(an_event.created_at) %> ago</td>
           <td><%= time_ago_in_words(an_event.updated_at) %> ago</td>
           <td>
-            <a href="/events/<%= an_event.id %>">Show details</a>
+            <%= link_to "Show details", event_path(an_event) %>
           </td>
         </tr>
         <% end %>

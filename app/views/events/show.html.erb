@@ -3,8 +3,11 @@
     <h1>Event #<%= @the_event.id %> details</h1>
 
     <div class="nav-links">
-      <a href="/events">Back to events</a>
-      <a href="/delete_event/<%= @the_event.id %>" class="text-red">Delete event</a>
+      <%= link_to "Back to events", events_path %>
+      <%= link_to "Delete event", event_path(@the_event), 
+          method: :delete, 
+          class: "text-red",
+          data: { confirm: "Are you sure you want to delete this event?" } %>
     </div>
   </div>
 
@@ -41,39 +44,39 @@
   <div class="mb-4">
     <h2>Edit event</h2>
 
-    <form action="/modify_event/<%= @the_event.id %>" method="post">
+    <%= form_for @the_event do |f| %>
       <div>
-        <label for="name_box">Name</label>
-        <input type="text" id="name_box" name="query_name" value="<%= @the_event.name %>">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
       </div>
 
       <div>
-        <label for="venue_id_box">Venue</label>
-        <input type="text" id="venue_id_box" name="query_venue_id" value="<%= @the_event.venue_id %>">
+        <%= f.label :venue_id %>
+        <%= f.text_field :venue_id %>
       </div>
 
       <div>
-        <label for="description_box">Description</label>
-        <textarea id="description_box" name="query_description"><%= @the_event.description %></textarea>
+        <%= f.label :description %>
+        <%= f.text_area :description %>
       </div>
 
       <div>
-        <label for="date_box">Date</label>
-        <input type="datetime-local" id="date_box" name="query_date" value="<%= @the_event.date.strftime("%Y-%m-%dT%H:%M") %>">
+        <%= f.label :date %>
+        <%= f.datetime_local_field :date %>
       </div>
 
       <div>
-        <label for="price_box">Price</label>
-        <input type="number" id="price_box" name="query_price" value="<%= @the_event.price %>" step="0.01" min="0">
+        <%= f.label :price %>
+        <%= f.number_field :price, step: "0.01", min: 0 %>
       </div>
 
       <div>
-        <label for="capacity_box">Capacity</label>
-        <input type="number" id="capacity_box" name="query_capacity" value="<%= @the_event.capacity %>" min="1">
+        <%= f.label :capacity %>
+        <%= f.number_field :capacity, min: 1 %>
       </div>
 
-      <button>Update event</button>
-    </form>
+      <%= f.submit "Update event", class: "button" %>
+    <% end %>
   </div>
 </div>
 

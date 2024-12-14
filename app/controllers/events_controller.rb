@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("id")
     matching_events = Event.where({ :id => the_id })
     @the_event = matching_events.at(0)
     render({ :template => "events/show" })
@@ -30,7 +30,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("id")
     the_event = Event.where({ :id => the_id }).at(0)
 
     the_event.name = params.fetch("query_name")
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("id")
     the_event = Event.where({ :id => the_id }).at(0)
     the_event.destroy
     redirect_to("/events", { :notice => "Event deleted successfully."} )
