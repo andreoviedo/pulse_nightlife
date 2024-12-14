@@ -3,4 +3,6 @@ class TablePerson < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many  :orders, class_name: "Order", foreign_key: "table_service_id", dependent: :destroy
 end
