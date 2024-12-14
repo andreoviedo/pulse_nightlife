@@ -79,10 +79,12 @@ venues.each do |venue|
     events << event
 
     # Associate random promoters with each event
-    rand(1..3).times do
+    # Select random promoters without replacement
+    selected_promoters = promoters.sample(rand(1..3))
+    selected_promoters.each do |promoter|
       EventsPromoter.create!(
         event: event,
-        promoter: promoters.sample,
+        promoter: promoter,
         commission_rate: rand(5..15)
       )
     end
